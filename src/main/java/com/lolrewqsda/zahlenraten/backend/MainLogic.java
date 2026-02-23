@@ -63,6 +63,7 @@ public class MainLogic {
                 }
                 entryArrayList.add(xmlEntry);
                 XMLWriter.writeXML(file, entryArrayList);
+                createScoreEntry.getBestScore();
                 scoreVBox.getChildren().add(textFlow);
                 counter = 0;
                 difficulty(difficulty);

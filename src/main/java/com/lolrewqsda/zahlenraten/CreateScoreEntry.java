@@ -64,6 +64,20 @@ public class CreateScoreEntry {
         }
     }
 
+    public long getAverageRounds() throws Exception {
+        ArrayList<Long> tries = new ArrayList<>();
+        XMLLoader xmlLoader = new XMLLoader(file);
+        ArrayList<XMLEntry> xmlEntries = xmlLoader.loadXML();
+        long entryTriesCombined = 0;
+        for (XMLEntry entry : xmlEntries){
+            entryTriesCombined += entry.getTries();
+        }
+        System.out.println(entryTriesCombined);
+        long average = entryTriesCombined / xmlEntries.size();
+        System.out.println(average);
+        return average;
+    }
+
     public void getBestScore() throws Exception {
         ArrayList<Long> rounds = new ArrayList<>();
         XMLLoader xmlLoader = new XMLLoader(file);
@@ -75,12 +89,15 @@ public class CreateScoreEntry {
         long bestScore = rounds.getFirst();
         TextFlow textFlow = new TextFlow();
         Text text = new Text();
-        text.setText("Dein bester versuch ist " + bestScore + " Versuche!");
+        text.setText("Dein bester versuch ist " + bestScore + " Versuche! " + "Du hasst insgesamt " + rounds.size() +
+                " Runden gebraucht, im durchsnitt hast du: " + getAverageRounds() + " Versuche gebraucht");
         textFlow.getChildren().add(text);
         textFlow.prefHeightProperty().bind(vBox.heightProperty().multiply(0.025));
         textFlow.prefWidthProperty().bind(vBox.widthProperty().multiply(0.025));
         textFlow.setStyle("-fx-background-color: #bcfd4c; -fx-border-width: 1; -fx-border-color: #d0fe81");
-        vBox.getChildren().add(textFlow);
+        textFlow.setId("bestScoreTextFlow");
+        String id = textFlow.getId();
+        vBox.getChildren().removeIf(node -> id.equals(node.getId()));
+        vBox.getChildren().addFirst(textFlow);
     }
-
 }
