@@ -1,6 +1,8 @@
 package com.lolrewqsda.zahlenraten;
 
+import com.lolrewqsda.zahlenraten.backend.Difficulty;
 import com.lolrewqsda.zahlenraten.backend.MainLogic;
+import com.lolrewqsda.zahlenraten.backend.WrongInputException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -13,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 import org.xml.sax.SAXException;
+import com.lolrewqsda.zahlenraten.ConsoleOutput;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
@@ -23,6 +26,7 @@ public class HelloController {
     MainLogic mainLogic;
     File file;
     String workingDirectory = System.getProperty("user.dir");
+    ConsoleOutput consoleOutput;
 
     public HelloController(){
         mainLogic = new MainLogic();
@@ -63,21 +67,23 @@ public class HelloController {
         }
         inputField.prefHeightProperty().bind(mainGridPane.heightProperty().multiply(0.2));
         inputField.prefWidthProperty().bind(mainGridPane.widthProperty().multiply(0.2));
-        mainLogic.difficulty(MainLogic.Difficulty.Easy);
-        //scoreVBox.setStyle("-fx-background-color: lightblue"); //ToDo: move this to the fxml file
-
+        mainLogic.difficulty(Difficulty.Easy);
+        consoleOutput = new ConsoleOutput(mainLogic);
     }
     @FXML
     protected void onInput(){
         try {
-            mainLogic.setUserInput(Integer.parseInt(inputField.getText()));
-            mainLogic.tryCounter();
-            mainLogic.consoleOutput(inputField, scoreVBox, file);
+            consoleOutput.setUserInput(Integer.parseInt(inputField.getText()));
+            consoleOutput.tryCounter();
+            consoleOutput.consoleOutputSolo(inputField, scoreVBox, file);
             inputField.selectAll();
         }
         catch (IllegalArgumentException e){
             inputField.setText("Not an Integer");
             inputField.selectAll();
+        }
+        catch (WrongInputException e){
+            inputField.setText("Number must be between given range");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -90,17 +96,17 @@ public class HelloController {
         if (id.equals("easy")){
             mediumButton.setSelected(false);
             hardButton.setSelected(false);
-            mainLogic.difficulty(MainLogic.Difficulty.Easy);
+            mainLogic.difficulty(Difficulty.Easy);
         }
         else if (id.equals("medium")){
             easyButton.setSelected(false);
             hardButton.setSelected(false);
-            mainLogic.difficulty(MainLogic.Difficulty.Medium);
+            mainLogic.difficulty(Difficulty.Medium);
         }
         else{
             easyButton.setSelected(false);
             mediumButton.setSelected(false);
-            mainLogic.difficulty(MainLogic.Difficulty.Hard);
+            mainLogic.difficulty(Difficulty.Hard);
         }
 
         System.out.println(source);

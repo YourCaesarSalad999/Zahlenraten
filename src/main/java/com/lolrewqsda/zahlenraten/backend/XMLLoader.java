@@ -2,7 +2,6 @@ package com.lolrewqsda.zahlenraten.backend;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -11,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class XMLLoader {
@@ -18,7 +18,7 @@ public class XMLLoader {
     DocumentBuilder builder;
     DocumentBuilderFactory factory;
     File xmlFile;
-    public XMLLoader(File xmlFile) throws ParserConfigurationException, IOException, SAXException {
+    public XMLLoader(File xmlFile) throws ParserConfigurationException {
         factory = DocumentBuilderFactory.newInstance();
         builder = factory.newDocumentBuilder();
         this.xmlFile = xmlFile;
@@ -33,8 +33,9 @@ public class XMLLoader {
                 Element element = (Element) nodeList.item(i);
                 long score = Long.parseLong(element.getElementsByTagName("score").item(0).getTextContent());
                 long round = Long.parseLong(element.getElementsByTagName("round").item(0).getTextContent());
+                ZonedDateTime date = ZonedDateTime.parse(element.getElementsByTagName("date").item(0).getTextContent()); // ToDo: The Java.util.date package is deprecated and should be replaced by
                 System.out.println("score:" + score);
-                entryArrayList.add(new XMLEntry(round, score));
+                entryArrayList.add(new XMLEntry(score, round, date));
             }
         }
         return entryArrayList;
