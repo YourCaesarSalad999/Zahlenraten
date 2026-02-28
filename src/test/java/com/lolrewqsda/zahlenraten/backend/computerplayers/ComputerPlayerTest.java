@@ -20,10 +20,13 @@ class ComputerPlayerTest {
 
     @Test
     void binarySearch() {
+        int tries = 0;
         int guessedNumber;
         do {
             guessedNumber = computerPlayer.binarySearch();
+            tries++;
         } while (guessedNumber != randomInt);
+        System.out.println("AI needed " + tries + " tries");
         assertEquals(randomInt, guessedNumber);
     }
 }

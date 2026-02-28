@@ -1,7 +1,6 @@
 package com.lolrewqsda.zahlenraten;
 
 import com.lolrewqsda.zahlenraten.backend.Difficulty;
-import com.lolrewqsda.zahlenraten.backend.MainLogic;
 import com.lolrewqsda.zahlenraten.backend.ThreadHandler;
 import com.lolrewqsda.zahlenraten.backend.WrongInputException;
 import com.lolrewqsda.zahlenraten.backend.computerplayers.ComputerPlayer;
@@ -16,29 +15,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import java.io.File;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 
 public class CpuPlayController implements  ControllerInterface{
 
-        MainLogic mainLogic;
         File file;
         String workingDirectory = System.getProperty("user.dir");
-        ConsoleOutput consoleOutput;
+        ConsoleOutputCPU consoleOutput;
         DiceRoll diceRoll;
         ComputerPlayer computerPlayer;
 
         public CpuPlayController(){
-            mainLogic = new MainLogic();
-            mainLogic.difficulty(Difficulty.Easy); // Generate the random number
-            computerPlayer = new ComputerPlayer(mainLogic.getDifficulty(), mainLogic.getRandomInt());
+            consoleOutput = new ConsoleOutputCPU(Difficulty.Easy);
+            consoleOutput.difficulty(Difficulty.Easy); // Generate the random number
+            computerPlayer = new ComputerPlayer(consoleOutput.getDifficulty(), consoleOutput.getRandomInt());
             file = new File(workingDirectory + "/Scores");
             System.out.println(file);
             diceRoll = ComputerPlayer.rollDice();
-            consoleOutput = new ConsoleOutput(mainLogic);
         }
 
         @FXML
@@ -84,7 +78,6 @@ public class CpuPlayController implements  ControllerInterface{
             }
             inputField.prefHeightProperty().bind(mainGridPane.heightProperty().multiply(0.2));
             inputField.prefWidthProperty().bind(mainGridPane.widthProperty().multiply(0.2));
-             //ToDo: All variables should be initialized in te constructor and not in the initialize function
             manageTurn();
         }
 
@@ -105,8 +98,8 @@ public class CpuPlayController implements  ControllerInterface{
         public void onInput(){
                 try {
                     consoleOutput.setUserInput(Integer.parseInt(inputField.getText()));
-                    consoleOutput.tryCounter();
-                    consoleOutput.consoleOutputCPU(inputField, scoreVBox, file, diceRoll);
+                    consoleOutput.tryCounter(diceRoll);
+                    consoleOutput.consoleOutput(inputField, scoreVBox, file, diceRoll);
                     inputField.selectAll();
                     diceRoll = consoleOutput.getCurrentDiceRoll();
                     manageTurn();
@@ -127,17 +120,17 @@ public class CpuPlayController implements  ControllerInterface{
             if (id.equals("easy")){
                 mediumButton.setSelected(false);
                 hardButton.setSelected(false);
-                mainLogic.difficulty(Difficulty.Easy);
+                consoleOutput.difficulty(Difficulty.Easy);
             }
             else if (id.equals("medium")){
                 easyButton.setSelected(false);
                 hardButton.setSelected(false);
-                mainLogic.difficulty(Difficulty.Medium);
+                consoleOutput.difficulty(Difficulty.Medium);
             }
             else{
                 easyButton.setSelected(false);
                 mediumButton.setSelected(false);
-                mainLogic.difficulty(Difficulty.Hard);
+                consoleOutput.difficulty(Difficulty.Hard);
             }
 
             System.out.println(source);
