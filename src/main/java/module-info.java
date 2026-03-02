@@ -8,4 +8,6 @@ module com.lolrewqsda.zahlenraten.zahlenraten {
 
     opens com.lolrewqsda.zahlenraten to javafx.fxml;
     exports com.lolrewqsda.zahlenraten;
+    exports com.lolrewqsda.zahlenraten.backend;
+    exports com.lolrewqsda.zahlenraten.backend.computerplayers;
 }

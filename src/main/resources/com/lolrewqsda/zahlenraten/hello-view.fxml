@@ -23,9 +23,9 @@
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="25.0" GridPane.halignment="LEFT">
          <children>
             <Label text="Select Difficulty" textFill="#fcf8f8" />
-            <RadioButton id="easy" fx:id="easyButton" mnemonicParsing="false" onAction="#radioButtonDifficultySetting" style="-fx-background-color: lightgreen;" text="Easy" />
-            <RadioButton id="medium" fx:id="mediumButton" mnemonicParsing="false" onAction="#radioButtonDifficultySetting" style="-fx-background-color: yellow;" text="Medium" />
-            <RadioButton id="hard" fx:id="hardButton" mnemonicParsing="false" onAction="#radioButtonDifficultySetting" style="-fx-background-color: red;" text="Hard" />
+            <RadioButton id="easy" fx:id="easyButton" mnemonicParsing="false" onAction="#radioButtonDifficultySetting" style="-fx-background-color: lightgreen;" text="Easy (0-50)" />
+            <RadioButton id="medium" fx:id="mediumButton" mnemonicParsing="false" onAction="#radioButtonDifficultySetting" style="-fx-background-color: yellow;" text="Medium (0-100)" />
+            <RadioButton id="hard" fx:id="hardButton" mnemonicParsing="false" onAction="#radioButtonDifficultySetting" style="-fx-background-color: red;" text="Hard (0-500)" />
          </children>
          <GridPane.margin>
             <Insets />

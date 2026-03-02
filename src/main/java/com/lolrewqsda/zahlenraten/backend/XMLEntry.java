@@ -1,18 +1,18 @@
 package com.lolrewqsda.zahlenraten.backend;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public class XMLEntry {
     long round;
     long tries;
-    Date date;
+    ZonedDateTime date;
     /// Use for creating new entries
     public XMLEntry(long round, long tries){
         this.round = round;
         this.tries = tries;
-        this.date = new Date();
+        this.date = ZonedDateTime.now();
     }
     /// Use to load already existing entries
-    public XMLEntry(long tries, long round, Date date){
+    public XMLEntry(long tries, long round, ZonedDateTime date){
         this.tries = tries;
         this.round = round;
         this.date = date;
@@ -23,7 +23,7 @@ public class XMLEntry {
     public long getRound(){
         return round;
     }
-    public Date getDate(){
+    public ZonedDateTime getDate(){
         return date;
     }
 }

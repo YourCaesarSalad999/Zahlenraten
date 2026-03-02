@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class RandomGenerator {
     private final Random random = new Random();
-    protected RandomGenerator(){
+    public RandomGenerator(){
 
     }
     public int generateRandomInt(int min, int max){

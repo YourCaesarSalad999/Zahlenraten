@@ -1,7 +1,6 @@
 package com.lolrewqsda.zahlenraten;
 
 import com.lolrewqsda.zahlenraten.backend.XMLLoader;
-import com.lolrewqsda.zahlenraten.backend.XMLWriter;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -10,9 +9,9 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 import com.lolrewqsda.zahlenraten.backend.XMLEntry;
 
@@ -41,12 +40,12 @@ public class CreateScoreEntry {
         for (XMLEntry entry : xmlEntries){
             long round = entry.getRound();
             long score = entry.getTries();
-            Date date = entry.getDate();
+            ZonedDateTime date = entry.getDate();
             vBox.getChildren().add(createTextFlow(score, round, date));
         }
     }
 
-    public TextFlow createTextFlow(long counter, long round, Date date) {
+    public TextFlow createTextFlow(long counter, long round, ZonedDateTime date) {
         try {
             TextFlow textFlow = new TextFlow();
             Text text = new Text();
@@ -65,7 +64,6 @@ public class CreateScoreEntry {
     }
 
     public long getAverageRounds() throws Exception {
-        ArrayList<Long> tries = new ArrayList<>();
         XMLLoader xmlLoader = new XMLLoader(file);
         ArrayList<XMLEntry> xmlEntries = xmlLoader.loadXML();
         long entryTriesCombined = 0;
@@ -86,11 +84,17 @@ public class CreateScoreEntry {
             rounds.add(entry.getTries());
         }
         Collections.sort(rounds);
-        long bestScore = rounds.getFirst();
+        long bestScore;
+        if (!rounds.isEmpty()) {
+            bestScore = rounds.getFirst();
+        }
+        else {
+            bestScore = -1;
+        }
         TextFlow textFlow = new TextFlow();
         Text text = new Text();
         text.setText("Dein bester versuch ist " + bestScore + " Versuche! " + "Du hasst insgesamt " + rounds.size() +
-                " Runden gebraucht, im durchsnitt hast du: " + getAverageRounds() + " Versuche gebraucht");
+                " Runden gespielt, im durchsnitt hast du: " + getAverageRounds() + " Versuche gebraucht");
         textFlow.getChildren().add(text);
         textFlow.prefHeightProperty().bind(vBox.heightProperty().multiply(0.025));
         textFlow.prefWidthProperty().bind(vBox.widthProperty().multiply(0.025));
