@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -45,18 +46,18 @@ public class CpuPlayController implements  ControllerInterface{
         private VBox scoreVBox;
 
         @FXML
-        private RadioButton easyButton;
+        private MenuItem easyButton;
 
         @FXML
-        protected RadioButton mediumButton;
+        private MenuItem mediumButton;
 
         @FXML
-        private  RadioButton hardButton;
+        private  MenuItem hardButton;
 
         @FXML
         private ScrollPane scoreScrollPane;
 
-        Consumer<Integer> aiGuessedNumberConsumer = new Consumer<Integer>() {
+        Consumer<Integer> aiGuessedNumberConsumer = new Consumer<>() {
             @Override
             public void accept(Integer integer) {
                 System.out.println(integer);
@@ -97,6 +98,9 @@ public class CpuPlayController implements  ControllerInterface{
         @Override
         public void onInput(){
                 try {
+                    if (consoleOutput.getCurrentDiceRoll() == DiceRoll.GameOver){
+                        computerPlayer.reset();
+                    }
                     consoleOutput.setUserInput(Integer.parseInt(inputField.getText()));
                     consoleOutput.tryCounter(diceRoll);
                     consoleOutput.consoleOutput(inputField, scoreVBox, file, diceRoll);
@@ -118,18 +122,12 @@ public class CpuPlayController implements  ControllerInterface{
             Object source =  event.getSource();
             String id = ((Node) source).getId();
             if (id.equals("easy")){
-                mediumButton.setSelected(false);
-                hardButton.setSelected(false);
                 consoleOutput.difficulty(Difficulty.Easy);
             }
             else if (id.equals("medium")){
-                easyButton.setSelected(false);
-                hardButton.setSelected(false);
                 consoleOutput.difficulty(Difficulty.Medium);
             }
             else{
-                easyButton.setSelected(false);
-                mediumButton.setSelected(false);
                 consoleOutput.difficulty(Difficulty.Hard);
             }
 

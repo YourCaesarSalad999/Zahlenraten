@@ -94,7 +94,7 @@ public class CreateScoreEntry {
         TextFlow textFlow = new TextFlow();
         Text text = new Text();
         text.setText("Dein bester versuch ist " + bestScore + " Versuche! " + "Du hasst insgesamt " + rounds.size() +
-                " Runden gebraucht, im durchsnitt hast du: " + getAverageRounds() + " Versuche gebraucht");
+                " Runden gespielt, im durchsnitt hast du: " + getAverageRounds() + " Versuche gebraucht");
         textFlow.getChildren().add(text);
         textFlow.prefHeightProperty().bind(vBox.heightProperty().multiply(0.025));
         textFlow.prefWidthProperty().bind(vBox.widthProperty().multiply(0.025));

@@ -116,4 +116,10 @@ public class ComputerPlayer {
             return DiceRoll.AI;
         }
     }
+    public void reset(){
+        triesCounter = 0;
+        guessedValues.clear();
+        lastGuess = 0;
+        firstGuess = true;
+    }
 }

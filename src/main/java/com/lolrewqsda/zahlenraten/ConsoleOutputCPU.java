@@ -52,6 +52,7 @@ public class ConsoleOutputCPU extends ConsoleOutput{
                 setData(scoreVBox, file);
                 System.out.println("Gratulation du hast " + tryCounter + " Versuche gebraucht!");
                 textField.setText("Gratulation du hast " + tryCounter + " Versuche gebraucht.");
+                this.currentDiceRoll = DiceRoll.GameOver;
             }
             else {
                 System.out.println("AI guessed the right number and won, AI needed " + tryCountCPU + " turns.");

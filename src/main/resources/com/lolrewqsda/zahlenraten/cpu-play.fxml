@@ -20,7 +20,10 @@
         <menus>
           <Menu mnemonicParsing="false" text="Difficulty">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem id="easy" fx:id="easyButton" mnemonicParsing="false" text="Easy" />
+                  <MenuItem id="medium" fx:id="mediumButton" mnemonicParsing="false" text="Medium" />
+                  <MenuItem id="hard" fx:id="hardButton" mnemonicParsing="false" text="Hard" />
+                  <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
         </menus>
